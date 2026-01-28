@@ -3,6 +3,22 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+#environments
+aml/
+venv/
+.venv/
+env/
+.env
+
+#large data files
+data/raw/*.parquet
+data/raw/*.csv
+data/processed/*.parquet
+data/processed/*.csv
+
+# 忽略 Python 缓存
+__pycache__/
+*.pyc
 # C extensions
 *.so
 
