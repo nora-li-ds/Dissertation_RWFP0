@@ -18,9 +18,8 @@ matplotlib>=3.8.0
 seaborn>=0.13.0
 
 # --- Interactive Dev ---
-ipykernel         
-tqdm              
+ipykernel
+tqdm
 
-# --- Deep Learning (Step D ) ---
-
+# --- Deep Learning (Step D Pre-requisites) ---
 torch>=2.1.0
