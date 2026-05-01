@@ -1,12 +1,25 @@
-# ============================================================
-# Two-period ARIMAX and interaction analysis
-# ============================================================
+# SECU0069 report analysis
+# Candidate ID: RWFP0
+#
+# This script runs the statistical analysis used in my report.
+# It uses the processed hourly Dune datasets for:
+#   1. August 2024, a higher-fee comparison period
+#   2. March-April 2026, a recent low-fee comparison period
+#
+# The Python scripts used to collect and preprocess the Dune data are documented here:
+# https://github.com/nora-li-ds/Gas-Stress-Test-AML
+#
+# API keys and raw credentials are not included.
+
+# Load packages
 
 required_packages <- c(
   "tidyverse",
   "lubridate",
   "forecast",
-  "broom"
+  "tseries",
+  "broom",
+  "knitr"
 )
 
 for (pkg in required_packages) {
@@ -16,13 +29,16 @@ for (pkg in required_packages) {
   }
 }
 
+# Set paths
 root <- normalizePath(getwd())
 
+# This allows the script to run either from the project root or from scripts/.
 if (basename(root) == "scripts") {
   root <- normalizePath(file.path(root, ".."))
 }
 
 results_dir <- file.path(root, "results_two_periods")
+
 if (!dir.exists(results_dir)) {
   dir.create(results_dir, recursive = TRUE)
 }
@@ -41,32 +57,29 @@ path_2026 <- file.path(
   "dune_stablecoin_cex_hourly.csv"
 )
 
+# Helper function to load each period
+
 load_period <- function(path, period_name) {
   df <- read_csv(path, show_col_types = FALSE) %>%
     mutate(
+      # Some midnight rows may be stored as date-only values, so I allow several formats.
       time = parse_date_time(
         time,
-        orders = c(
-          "ymd HMS",
-          "ymd HM",
-          "ymd HMS OS",
-          "ymd HM OS",
-          "ymd"
-        ),
+        orders = c("ymd HMS", "ymd HM", "ymd HMS OS", "ymd HM OS", "ymd"),
         tz = "UTC"
       ),
       cashout_volume_usd = as.numeric(cashout_volume_usd),
       transfer_count = as.numeric(transfer_count),
       avg_gas_gwei = as.numeric(avg_gas_gwei),
       shock = as.numeric(shock),
+
+      # Log variables are used because both volume and gas fees are highly skewed.
       log_volume = log(cashout_volume_usd + 1),
       log_gas = log(avg_gas_gwei + 1),
       period = period_name
     ) %>%
     arrange(time) %>%
-    mutate(
-      time_index = row_number()
-    )
+    mutate(time_index = row_number())
 
   cat("\nLoaded", period_name, "\n")
   cat("Rows:", nrow(df), "\n")
@@ -82,16 +95,15 @@ load_period <- function(path, period_name) {
   cat("Max gas:", max(df$avg_gas_gwei, na.rm = TRUE), "\n")
   cat("Shock hours:", sum(df$shock == 1, na.rm = TRUE), "\n")
 
-  return(df)
+  df
 }
 
 df_2024 <- load_period(path_2024, "high_fee_2024")
 df_2026 <- load_period(path_2026, "low_fee_2026")
 
-# ============================================================
-# Descriptive comparison
-# ============================================================
-
+# Descriptive comparison 
+# This table is used to show that the two periods are genuinely different
+# fee environments.
 desc <- bind_rows(df_2024, df_2026) %>%
   group_by(period) %>%
   summarise(
@@ -111,16 +123,15 @@ desc <- bind_rows(df_2024, df_2026) %>%
 print(desc)
 write_csv(desc, file.path(results_dir, "two_period_descriptive_statistics.csv"))
 
-# ============================================================
-# ARIMAX function
-# ============================================================
-
+# ARIMAX models
 run_arimax <- function(df, period_name) {
   df <- df %>%
     filter(!is.na(log_volume), !is.na(log_gas), !is.na(shock))
 
+  # log_gas and shock are included as external regressors.
   xreg <- as.matrix(df %>% select(log_gas, shock))
 
+  # I use auto.arima to select the ARIMA error structure for each period.
   model <- auto.arima(
     df$log_volume,
     xreg = xreg,
@@ -138,30 +149,29 @@ run_arimax <- function(df, period_name) {
     estimate = as.numeric(coef(model)),
     se = sqrt(diag(model$var.coef))
   ) %>%
-    mutate(
-      t_value = estimate / se
-    )
+    mutate(t_value = estimate / se)
 
   write_csv(
     coef_table,
     file.path(results_dir, paste0("arimax_coefficients_", period_name, ".csv"))
   )
 
-  png(file.path(results_dir, paste0("arimax_residuals_", period_name, ".png")),
-      width = 900, height = 600)
+  # Residual checks are saved because serial correlation is important for this data.
+  png(
+    file.path(results_dir, paste0("arimax_residuals_", period_name, ".png")),
+    width = 900,
+    height = 600
+  )
   checkresiduals(model)
   dev.off()
 
-  return(model)
+  model
 }
 
 m_2024 <- run_arimax(df_2024, "high_fee_2024")
 m_2026 <- run_arimax(df_2026, "low_fee_2026")
 
-# ============================================================
-# Combined interaction OLS
-# ============================================================
-
+# Combined interaction model
 combined <- bind_rows(df_2024, df_2026) %>%
   mutate(
     period = factor(period),
@@ -169,6 +179,8 @@ combined <- bind_rows(df_2024, df_2026) %>%
     global_index = row_number()
   )
 
+# This model checks whether the gas-volume relationship changes across periods.
+# It is not intended as a formal DiD model, because there is no clean untreated group.
 m_interaction <- lm(
   log_volume ~ log_gas * period + shock * period + global_index,
   data = combined
@@ -184,10 +196,7 @@ write_csv(
   file.path(results_dir, "combined_interaction_ols.csv")
 )
 
-# ============================================================
 # Plots
-# ============================================================
-
 p1 <- ggplot(combined, aes(x = time, y = avg_gas_gwei)) +
   geom_line() +
   facet_wrap(~ period, scales = "free_x") +
