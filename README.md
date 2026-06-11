@@ -1,4 +1,4 @@
-````markdown
+
 # Fee Regime Classification and Stablecoin Transfer Behaviour for Auditable Crypto-AML
 
 This repository contains the code, data-processing workflow, and analytical materials for my MSc dissertation in Crime Science with Data Science at University College London.
@@ -84,7 +84,7 @@ The final methodology may be revised based on data quality, model diagnostics, a
 
 ## Repository Structure
 
-```text
+
 .
 ├── README.md
 ├── data/
@@ -110,7 +110,7 @@ The final methodology may be revised based on data quality, model diagnostics, a
 │   ├── ethics/
 │   └── notes/
 └── requirements.txt
-````
+
 
 The folder structure may change as the project develops.
 
@@ -192,5 +192,4 @@ This repository is part of an MSc dissertation project.
 
 Materials may change during the research process, and preliminary outputs should not be treated as final findings.
 
-```
-```
+
