@@ -84,7 +84,7 @@ The final methodology may be revised based on data quality, model diagnostics, a
 
 ## Repository Structure
 
-
+```text
 .
 ├── README.md
 ├── data/
@@ -110,7 +110,7 @@ The final methodology may be revised based on data quality, model diagnostics, a
 │   ├── ethics/
 │   └── notes/
 └── requirements.txt
-
+```
 
 The folder structure may change as the project develops.
 
