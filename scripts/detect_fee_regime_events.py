@@ -99,9 +99,11 @@ def run_dune_sql(query_sql: str):
         try:
             result = attempt()
             return extract_rows(result)
-        except Exception as exc:
+        except TypeError as exc:
             last_error = exc
             print(f"Attempt format failed: {exc}")
+        except Exception:
+            raise
 
     raise RuntimeError(
         f"All Dune SQL execution attempts failed. Last error: {last_error}"

@@ -1,0 +1,469 @@
+{
+  "queried_at_utc": "2026-06-18T22:16:03.411584+00:00",
+  "queries": {
+    "ethereum_label_categories": {
+      "status": "ok",
+      "rows": [
+        {
+          "address_count": 110399246,
+          "category": "dex"
+        },
+        {
+          "address_count": 4055362,
+          "category": "nft"
+        },
+        {
+          "address_count": 3813105,
+          "category": "contracts"
+        },
+        {
+          "address_count": 1429771,
+          "category": "infrastructure"
+        },
+        {
+          "address_count": 1198178,
+          "category": "social"
+        },
+        {
+          "address_count": 420856,
+          "category": "safe"
+        },
+        {
+          "address_count": 162091,
+          "category": "tornado_cash"
+        },
+        {
+          "address_count": 19122,
+          "category": "dao"
+        },
+        {
+          "address_count": 4373,
+          "category": "institution"
+        },
+        {
+          "address_count": 3257,
+          "category": "cex users"
+        },
+        {
+          "address_count": 3044,
+          "category": "balancer_v1_pool"
+        },
+        {
+          "address_count": 1692,
+          "category": "balancer_v2_pool"
+        },
+        {
+          "address_count": 1527,
+          "category": "balancer_v3_pool"
+        },
+        {
+          "address_count": 475,
+          "category": "balancer_gauges"
+        },
+        {
+          "address_count": 136,
+          "category": "bridge"
+        },
+        {
+          "address_count": 111,
+          "category": "balancer_cowswap_amm_pool"
+        },
+        {
+          "address_count": 38,
+          "category": "ofac_sanction"
+        },
+        {
+          "address_count": 9,
+          "category": "Bridge"
+        },
+        {
+          "address_count": 1,
+          "category": "Rollup"
+        }
+      ]
+    },
+    "required_table_columns": {
+      "status": "ok",
+      "rows": [
+        {
+          "column_name": "time",
+          "data_type": "timestamp(3)",
+          "table_name": "blocks",
+          "table_schema": "ethereum"
+        },
+        {
+          "column_name": "number",
+          "data_type": "bigint",
+          "table_name": "blocks",
+          "table_schema": "ethereum"
+        },
+        {
+          "column_name": "gas_limit",
+          "data_type": "decimal(38,0)",
+          "table_name": "blocks",
+          "table_schema": "ethereum"
+        },
+        {
+          "column_name": "gas_used",
+          "data_type": "decimal(38,0)",
+          "table_name": "blocks",
+          "table_schema": "ethereum"
+        },
+        {
+          "column_name": "difficulty",
+          "data_type": "bigint",
+          "table_name": "blocks",
+          "table_schema": "ethereum"
+        },
+        {
+          "column_name": "total_difficulty",
+          "data_type": "decimal(38,0)",
+          "table_name": "blocks",
+          "table_schema": "ethereum"
+        },
+        {
+          "column_name": "size",
+          "data_type": "bigint",
+          "table_name": "blocks",
+          "table_schema": "ethereum"
+        },
+        {
+          "column_name": "base_fee_per_gas",
+          "data_type": "bigint",
+          "table_name": "blocks",
+          "table_schema": "ethereum"
+        },
+        {
+          "column_name": "hash",
+          "data_type": "varbinary",
+          "table_name": "blocks",
+          "table_schema": "ethereum"
+        },
+        {
+          "column_name": "parent_hash",
+          "data_type": "varbinary",
+          "table_name": "blocks",
+          "table_schema": "ethereum"
+        },
+        {
+          "column_name": "miner",
+          "data_type": "varbinary",
+          "table_name": "blocks",
+          "table_schema": "ethereum"
+        },
+        {
+          "column_name": "nonce",
+          "data_type": "varbinary",
+          "table_name": "blocks",
+          "table_schema": "ethereum"
+        },
+        {
+          "column_name": "date",
+          "data_type": "date",
+          "table_name": "blocks",
+          "table_schema": "ethereum"
+        },
+        {
+          "column_name": "blob_gas_used",
+          "data_type": "bigint",
+          "table_name": "blocks",
+          "table_schema": "ethereum"
+        },
+        {
+          "column_name": "excess_blob_gas",
+          "data_type": "bigint",
+          "table_name": "blocks",
+          "table_schema": "ethereum"
+        },
+        {
+          "column_name": "parent_beacon_block_root",
+          "data_type": "varbinary",
+          "table_name": "blocks",
+          "table_schema": "ethereum"
+        },
+        {
+          "column_name": "blockchain",
+          "data_type": "varchar",
+          "table_name": "addresses",
+          "table_schema": "labels"
+        },
+        {
+          "column_name": "address",
+          "data_type": "varbinary",
+          "table_name": "addresses",
+          "table_schema": "labels"
+        },
+        {
+          "column_name": "name",
+          "data_type": "varchar",
+          "table_name": "addresses",
+          "table_schema": "labels"
+        },
+        {
+          "column_name": "category",
+          "data_type": "varchar",
+          "table_name": "addresses",
+          "table_schema": "labels"
+        },
+        {
+          "column_name": "contributor",
+          "data_type": "varchar",
+          "table_name": "addresses",
+          "table_schema": "labels"
+        },
+        {
+          "column_name": "source",
+          "data_type": "varchar",
+          "table_name": "addresses",
+          "table_schema": "labels"
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp(3) with time zone",
+          "table_name": "addresses",
+          "table_schema": "labels"
+        },
+        {
+          "column_name": "updated_at",
+          "data_type": "timestamp(3) with time zone",
+          "table_name": "addresses",
+          "table_schema": "labels"
+        },
+        {
+          "column_name": "model_name",
+          "data_type": "varchar",
+          "table_name": "addresses",
+          "table_schema": "labels"
+        },
+        {
+          "column_name": "label_type",
+          "data_type": "varchar",
+          "table_name": "addresses",
+          "table_schema": "labels"
+        },
+        {
+          "column_name": "timestamp",
+          "data_type": "timestamp(3) with time zone",
+          "table_name": "hour",
+          "table_schema": "prices"
+        },
+        {
+          "column_name": "blockchain",
+          "data_type": "varchar",
+          "table_name": "hour",
+          "table_schema": "prices"
+        },
+        {
+          "column_name": "contract_address",
+          "data_type": "varbinary",
+          "table_name": "hour",
+          "table_schema": "prices"
+        },
+        {
+          "column_name": "symbol",
+          "data_type": "varchar",
+          "table_name": "hour",
+          "table_schema": "prices"
+        },
+        {
+          "column_name": "price",
+          "data_type": "double",
+          "table_name": "hour",
+          "table_schema": "prices"
+        },
+        {
+          "column_name": "decimals",
+          "data_type": "integer",
+          "table_name": "hour",
+          "table_schema": "prices"
+        },
+        {
+          "column_name": "volume",
+          "data_type": "double",
+          "table_name": "hour",
+          "table_schema": "prices"
+        },
+        {
+          "column_name": "source",
+          "data_type": "varchar",
+          "table_name": "hour",
+          "table_schema": "prices"
+        },
+        {
+          "column_name": "contract_address_varchar",
+          "data_type": "varchar",
+          "table_name": "hour",
+          "table_schema": "prices"
+        },
+        {
+          "column_name": "minute",
+          "data_type": "timestamp(3) with time zone",
+          "table_name": "usd",
+          "table_schema": "prices"
+        },
+        {
+          "column_name": "blockchain",
+          "data_type": "varchar",
+          "table_name": "usd",
+          "table_schema": "prices"
+        },
+        {
+          "column_name": "contract_address",
+          "data_type": "varbinary",
+          "table_name": "usd",
+          "table_schema": "prices"
+        },
+        {
+          "column_name": "decimals",
+          "data_type": "integer",
+          "table_name": "usd",
+          "table_schema": "prices"
+        },
+        {
+          "column_name": "symbol",
+          "data_type": "varchar",
+          "table_name": "usd",
+          "table_schema": "prices"
+        },
+        {
+          "column_name": "price",
+          "data_type": "double",
+          "table_name": "usd",
+          "table_schema": "prices"
+        },
+        {
+          "column_name": "unique_key",
+          "data_type": "varchar",
+          "table_name": "transfers",
+          "table_schema": "tokens"
+        },
+        {
+          "column_name": "blockchain",
+          "data_type": "varchar",
+          "table_name": "transfers",
+          "table_schema": "tokens"
+        },
+        {
+          "column_name": "block_month",
+          "data_type": "date",
+          "table_name": "transfers",
+          "table_schema": "tokens"
+        },
+        {
+          "column_name": "block_date",
+          "data_type": "date",
+          "table_name": "transfers",
+          "table_schema": "tokens"
+        },
+        {
+          "column_name": "block_time",
+          "data_type": "timestamp(3) with time zone",
+          "table_name": "transfers",
+          "table_schema": "tokens"
+        },
+        {
+          "column_name": "block_number",
+          "data_type": "bigint",
+          "table_name": "transfers",
+          "table_schema": "tokens"
+        },
+        {
+          "column_name": "tx_hash",
+          "data_type": "varbinary",
+          "table_name": "transfers",
+          "table_schema": "tokens"
+        },
+        {
+          "column_name": "evt_index",
+          "data_type": "bigint",
+          "table_name": "transfers",
+          "table_schema": "tokens"
+        },
+        {
+          "column_name": "trace_address",
+          "data_type": "array(bigint)",
+          "table_name": "transfers",
+          "table_schema": "tokens"
+        },
+        {
+          "column_name": "token_standard",
+          "data_type": "varchar",
+          "table_name": "transfers",
+          "table_schema": "tokens"
+        },
+        {
+          "column_name": "tx_from",
+          "data_type": "varbinary",
+          "table_name": "transfers",
+          "table_schema": "tokens"
+        },
+        {
+          "column_name": "tx_to",
+          "data_type": "varbinary",
+          "table_name": "transfers",
+          "table_schema": "tokens"
+        },
+        {
+          "column_name": "tx_index",
+          "data_type": "bigint",
+          "table_name": "transfers",
+          "table_schema": "tokens"
+        },
+        {
+          "column_name": "from",
+          "data_type": "varbinary",
+          "table_name": "transfers",
+          "table_schema": "tokens"
+        },
+        {
+          "column_name": "to",
+          "data_type": "varbinary",
+          "table_name": "transfers",
+          "table_schema": "tokens"
+        },
+        {
+          "column_name": "contract_address",
+          "data_type": "varbinary",
+          "table_name": "transfers",
+          "table_schema": "tokens"
+        },
+        {
+          "column_name": "symbol",
+          "data_type": "varchar",
+          "table_name": "transfers",
+          "table_schema": "tokens"
+        },
+        {
+          "column_name": "amount_raw",
+          "data_type": "uint256",
+          "table_name": "transfers",
+          "table_schema": "tokens"
+        },
+        {
+          "column_name": "amount",
+          "data_type": "double",
+          "table_name": "transfers",
+          "table_schema": "tokens"
+        },
+        {
+          "column_name": "price_usd",
+          "data_type": "double",
+          "table_name": "transfers",
+          "table_schema": "tokens"
+        },
+        {
+          "column_name": "amount_usd",
+          "data_type": "double",
+          "table_name": "transfers",
+          "table_schema": "tokens"
+        },
+        {
+          "column_name": "_updated_at",
+          "data_type": "timestamp(3) with time zone",
+          "table_name": "transfers",
+          "table_schema": "tokens"
+        }
+      ]
+    }
+  }
+}
