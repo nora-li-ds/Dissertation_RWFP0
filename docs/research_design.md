@@ -25,6 +25,10 @@ enriched among independently labelled high-risk entities.
 
 `transfer_count` and the extensive margin are primary outcomes. USD volume is
 secondary because a small number of whale transfers can dominate event totals.
+
+- Negative-control outcome:
+  - otherwise comparable USDC/USDT transfers not directed to labelled CEX
+    addresses.
 - Network-friction exposure:
   - pre-determined network base-fee shock;
   - continuous hourly base fee;
@@ -82,11 +86,14 @@ precision at the top-k rigidity tail, lift, and uncertainty intervals.
 
 1. Event-study model for `log1p(volume_usd)` with entity and event-hour fixed
    effects and entity-clustered uncertainty.
-2. Count model for transfer counts, preferably Poisson pseudo-maximum
+2. Difference-in-differences/event-study comparison of CEX-bound transfers
+   against non-CEX stablecoin transfers. This is the primary aggregate design
+   because fee shocks can suppress general network activity.
+3. Count model for transfer counts, preferably Poisson pseudo-maximum
    likelihood with high-dimensional fixed effects.
-3. Extensive-margin model for `transfer_any`.
-4. Time-to-next-transfer model as a complementary delay outcome.
-5. Partially pooled entity heterogeneity model for the rigidity ranking.
+4. Extensive-margin model for `transfer_any`.
+5. Time-to-next-transfer model as a complementary delay outcome.
+6. Partially pooled entity heterogeneity model for the rigidity ranking.
 
 ## 6. Identification assumptions
 

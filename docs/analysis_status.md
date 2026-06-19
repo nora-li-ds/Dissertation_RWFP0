@@ -22,8 +22,8 @@ Last updated: 2026-06-19
 
 These are exploratory findings, not final dissertation estimates.
 
-- Mean hourly transaction counts fell strongly during all three pilot shocks
-  relative to their baseline periods.
+- Naive pre/post comparisons showed large declines in hourly transaction counts
+  during all three pilot shocks.
 - In the pooled hourly pilot model, the estimated transaction-count elasticity
   with respect to average base fee was approximately -0.89.
 - The analogous USD-volume elasticity was approximately -0.48 and was visibly
@@ -36,18 +36,35 @@ These are exploratory findings, not final dissertation estimates.
   addresses. They were not enriched in the rigidity top decile:
   lift approximately 0.83; one-sided Fisher p approximately 0.72.
 
+### Dynamic risk-set correction
+
+The naive pre/post decline is partly mechanical because entities were selected
+for pre-event activity. A stricter diagnostic reconstructed each real and
+pseudo-event risk set using only its own prior 48 hours.
+
+- E002 retained a materially lower observed/expected transaction ratio than all
+  its pseudo windows across activity thresholds.
+- E020 and E047 were generally similar to their pseudo windows after dynamic
+  calibration.
+- The current pilot therefore supports an effect for the most extreme event,
+  but not a general effect across all candidate fee shocks.
+
 ## Interpretation
 
-The pilot supports the existence of a broad cost response in transaction
-counts. It does not currently support the stronger claim that behaviourally
-rigid entities are enriched for the available public high-risk labels.
+The pilot does not yet establish a broad causal cost response. It suggests that
+very extreme fee shocks may suppress CEX-bound transaction activity, while
+moderate candidate shocks are difficult to distinguish from ordinary
+mean-reversion and activity turnover.
 
 The defensible contribution may therefore be:
 
 1. a transparent causal stress-test design;
 2. evidence that transaction count is more informative than aggregate volume;
-3. an auditable rigidity signal conditional on baseline activity; and
-4. a demonstration of the limits of public labels for AML validation.
+3. dynamic risk-set and placebo calibration that prevents a misleading
+   pre-selection result;
+4. a negative-control comparison of CEX-bound and non-CEX stablecoin activity;
+5. an auditable rigidity signal conditional on baseline activity; and
+6. a demonstration of the limits of public labels for AML validation.
 
 ## Current external blocker
 
@@ -71,6 +88,7 @@ repeating completed extractions.
 ## Remaining work
 
 - Extract the remaining 17 eligible events.
+- Extract hourly non-CEX stablecoin negative-control outcomes.
 - Rename the pilot analysis script/output to final analysis after full
   extraction.
 - Estimate final event-study uncertainty with event-level clustering or a
@@ -80,4 +98,3 @@ repeating completed extractions.
 - Run one-, three-, and six-hour aggregation sensitivity checks.
 - Produce dissertation-ready tables and figures.
 - Draft Methods, Results, Limitations, and Discussion chapters.
-
