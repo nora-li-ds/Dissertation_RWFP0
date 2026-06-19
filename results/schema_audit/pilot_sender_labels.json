@@ -1,0 +1,82 @@
+{
+  "event_id": "E002",
+  "rows": [
+    {
+      "category": "__unlabelled__",
+      "example_label_type": null,
+      "example_model_name": null,
+      "example_source": null,
+      "sender_count": 274061
+    },
+    {
+      "category": "dex",
+      "example_label_type": "usage",
+      "example_model_name": "trader_platforms",
+      "example_source": "query",
+      "sender_count": 2477
+    },
+    {
+      "category": "nft",
+      "example_label_type": "usage",
+      "example_model_name": "nft_users_platforms",
+      "example_source": "query",
+      "sender_count": 373
+    },
+    {
+      "category": "institution",
+      "example_label_type": "identifier",
+      "example_model_name": "cex_ethereum",
+      "example_source": "static",
+      "sender_count": 196
+    },
+    {
+      "category": "cex users",
+      "example_label_type": "persona",
+      "example_model_name": "cex_users_withdrawals",
+      "example_source": "query",
+      "sender_count": 196
+    },
+    {
+      "category": "social",
+      "example_label_type": "personas",
+      "example_model_name": "most_three_letter_ens_owner",
+      "example_source": "query",
+      "sender_count": 178
+    },
+    {
+      "category": "tornado_cash",
+      "example_label_type": "persona",
+      "example_model_name": "tornado_cash",
+      "example_source": "query",
+      "sender_count": 54
+    },
+    {
+      "category": "infrastructure",
+      "example_label_type": "persona",
+      "example_model_name": "validators_ethereum",
+      "example_source": "static",
+      "sender_count": 50
+    },
+    {
+      "category": "contracts",
+      "example_label_type": "identifier",
+      "example_model_name": "contracts",
+      "example_source": "query",
+      "sender_count": 41
+    },
+    {
+      "category": "safe",
+      "example_label_type": "persona",
+      "example_model_name": "safe_ethereum",
+      "example_source": "query",
+      "sender_count": 8
+    },
+    {
+      "category": "bridge",
+      "example_label_type": "identifier",
+      "example_model_name": "bridges_ethereum",
+      "example_source": "static",
+      "sender_count": 2
+    }
+  ]
+}

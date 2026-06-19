@@ -61,7 +61,8 @@ Required fields:
 - `eth_volatility_24h`
 - `stablecoin_depeg_abs`
 - `is_fee_shock`
-- `known_positive`
+- `ofac_sanction_label`
+- `tornado_cash_label`
 - `positive_label_source`
 
 ## Privacy and reporting
@@ -70,4 +71,3 @@ Required fields:
 - Published tables use salted hashes or aggregate identifiers.
 - No attempt is made to identify natural persons.
 - Unlabelled entities are never called negative, legitimate, or clean.
-
