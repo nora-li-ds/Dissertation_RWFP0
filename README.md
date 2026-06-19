@@ -185,8 +185,11 @@ python scripts/build_event_catalog.py
 python scripts/extract_hourly_market_controls.py
 python scripts/screen_events_for_market_stability.py
 python scripts/extract_entity_event_transfers.py --all-eligible
+python scripts/extract_negative_control_outcomes.py --all-eligible
 python scripts/build_analysis_panels.py
 python scripts/run_pilot_analysis.py
+python scripts/run_pilot_robustness.py
+python scripts/validate_pipeline.py
 ```
 
 Raw address-level files are stored only under the ignored local `data/`

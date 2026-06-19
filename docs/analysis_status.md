@@ -17,6 +17,10 @@ Last updated: 2026-06-19
 - Built event-hour and entity-event-period modelling panels.
 - Ran exploratory event-study, hourly regression, entity-response, and
   positive-unlabelled enrichment analyses.
+- Ran aggregation, leave-one-event-out, activity-threshold, and dynamically
+  reconstructed placebo-risk-set diagnostics.
+- Added automated integrity and privacy validation for current outputs.
+- Drafted the dissertation Methods and pilot Results sections.
 
 ## Pilot evidence
 
