@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
+import requests
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -224,6 +225,15 @@ def main() -> None:
                 print(f"Rows: {len(frame):,}; saved: {output.name}")
                 break
             except Exception as exc:
+                if (
+                    isinstance(exc, requests.HTTPError)
+                    and exc.response is not None
+                    and exc.response.status_code == 402
+                ):
+                    raise RuntimeError(
+                        "Dune returned HTTP 402 (credits/payment required). "
+                        "No retry was attempted."
+                    ) from exc
                 if attempt == MAX_RETRIES:
                     raise
                 wait = 30 * attempt

@@ -1,0 +1,1 @@
+Definition and pipeline checks only. Final robustness requires all eligible events and event-level uncertainty.

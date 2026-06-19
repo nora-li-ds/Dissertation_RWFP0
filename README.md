@@ -159,14 +159,38 @@ Ethics approval or exemption must be obtained before data collection or analysis
 * [x] Preliminary Dune data pipeline tested
 * [x] Pilot comparative time-series analysis completed
 * [x] Dissertation ethics form submitted
+* [x] Final research design specified
+* [x] Lagged fee-event detection implemented
+* [x] Hourly market-control dataset constructed
+* [x] Stable-market event screen implemented
+* [x] Three-event entity-level pilot dataset constructed
 * [ ] Ethics decision received
-* [ ] Final research design confirmed
-* [ ] Fee-regime classification method selected
-* [ ] Main dataset constructed
+* [ ] Remaining eligible event data extracted
+* [ ] Full main dataset constructed
 * [ ] Main statistical analysis completed
 * [ ] Robustness checks completed
 * [ ] Dissertation figures and tables finalised
 * [ ] Final dissertation submitted
+
+The current research design, data contract, results, and remaining work are
+documented in `docs/research_design.md`, `docs/data_contract.md`, and
+`docs/analysis_status.md`.
+
+## Reproduction commands
+
+Run commands from the repository root:
+
+```powershell
+python scripts/build_event_catalog.py
+python scripts/extract_hourly_market_controls.py
+python scripts/screen_events_for_market_stability.py
+python scripts/extract_entity_event_transfers.py --all-eligible
+python scripts/build_analysis_panels.py
+python scripts/run_pilot_analysis.py
+```
+
+Raw address-level files are stored only under the ignored local `data/`
+directory.
 
 ## Limitations
 

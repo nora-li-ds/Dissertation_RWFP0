@@ -1,0 +1,1 @@
+Exploratory pilot only. Inference must be rerun after extraction of all eligible stable-market events. HAC uncertainty with three events is not the final dissertation inference.

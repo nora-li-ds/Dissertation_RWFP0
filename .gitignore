@@ -24,6 +24,7 @@ __pycache__/
 
 # Distribution / packaging
 data/
+results/pilot_analysis/entity_event_responses.csv.gz
 .Python
 build/
 develop-eggs/

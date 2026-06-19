@@ -1,0 +1,4 @@
+event_id,raw_nonzero_rows,pre_active_entities,model_entities,minimum_pre_transactions,ofac_entities,tornado_cash_entities
+E002,204275,112743,15036,2,0,12
+E020,221790,112207,15014,2,0,0
+E047,322553,156008,25074,2,0,0

@@ -1,0 +1,7 @@
+event_id,label,entities,positive_entities,top_decile_entities,top_decile_positives,top_decile_lift,fisher_odds_ratio,fisher_one_sided_p
+E002,ofac_sanction_label,15036,0,1504,0,,,
+E020,ofac_sanction_label,15014,0,1502,0,,,
+E047,ofac_sanction_label,25074,0,2508,0,,,
+E002,tornado_cash_label,15036,12,1504,1,0.8331117021276595,0.8178189076392669,0.7178084046679559
+E020,tornado_cash_label,15014,0,1502,0,,,
+E047,tornado_cash_label,25074,0,2508,0,,,

@@ -22,6 +22,9 @@ enriched among independently labelled high-risk entities.
   - `transfer_count`: number of qualifying transfers;
   - `volume_usd`: total qualifying USD value;
   - `delay_hours`: time to the entity's next qualifying transfer.
+
+`transfer_count` and the extensive margin are primary outcomes. USD volume is
+secondary because a small number of whale transfers can dominate event totals.
 - Network-friction exposure:
   - pre-determined network base-fee shock;
   - continuous hourly base fee;
@@ -99,6 +102,11 @@ precision at the top-k rigidity tail, lift, and uncertainty intervals.
 
 These assumptions are assessed rather than asserted.
 
+Because entities are selected using pre-event activity, raw pre/post contrasts
+can exhibit regression to the mean. The main design therefore calibrates the
+shock response against pseudo-event windows that reconstruct the risk set using
+the same look-back rule at each pseudo-event time.
+
 ## 7. Required falsification and robustness checks
 
 - Pre-trend and anticipatory-effect tests.
@@ -123,4 +131,3 @@ The defensible conclusion is:
 
 The study must not claim that rigidity proves money laundering, sanctions
 evasion, urgency, or fear of asset freezing.
-
