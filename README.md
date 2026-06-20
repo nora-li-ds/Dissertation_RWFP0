@@ -190,10 +190,18 @@ python scripts/build_analysis_panels.py
 python scripts/run_pilot_analysis.py
 python scripts/run_pilot_robustness.py
 python scripts/validate_pipeline.py
+python scripts/check_final_readiness.py
 ```
 
 Raw address-level files are stored only under the ignored local `data/`
 directory.
+
+Final confirmatory analysis additionally requires:
+
+```powershell
+python scripts/extract_negative_control_outcomes.py --all-eligible
+python scripts/run_negative_control_analysis.py --bootstrap-reps 9999
+```
 
 ## Limitations
 

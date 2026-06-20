@@ -14,7 +14,6 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
-import requests
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -79,6 +78,11 @@ def run_query(client: DuneClient, sql: str) -> list[dict[str, Any]]:
         except Exception:
             raise
     raise RuntimeError(f"Dune query failed: {last_error}")
+
+
+def is_http_402(exc: Exception) -> bool:
+    response = getattr(exc, "response", None)
+    return response is not None and getattr(response, "status_code", None) == 402
 
 
 def build_sql(event: pd.Series) -> str:
@@ -225,11 +229,7 @@ def main() -> None:
                 print(f"Rows: {len(frame):,}; saved: {output.name}")
                 break
             except Exception as exc:
-                if (
-                    isinstance(exc, requests.HTTPError)
-                    and exc.response is not None
-                    and exc.response.status_code == 402
-                ):
+                if is_http_402(exc):
                     raise RuntimeError(
                         "Dune returned HTTP 402 (credits/payment required). "
                         "No retry was attempted."

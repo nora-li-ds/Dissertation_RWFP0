@@ -71,3 +71,21 @@ Required fields:
 - Published tables use salted hashes or aggregate identifiers.
 - No attempt is made to identify natural persons.
 - Unlabelled entities are never called negative, legitimate, or clean.
+
+## Destination-group negative-control panel
+
+Expected local files:
+`data/raw_negative_controls/{event_id}_destination_groups.csv`
+
+Required fields:
+
+- `event_id`
+- `hour`
+- `destination_group` (`cex_bound` or `non_cex`)
+- `transfer_count`
+- `transaction_count`
+- `active_senders`
+- `volume_usd`
+
+The negative-control panel contains aggregate hourly outcomes and no raw
+address identifiers.

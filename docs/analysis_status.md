@@ -21,6 +21,12 @@ Last updated: 2026-06-19
   reconstructed placebo-risk-set diagnostics.
 - Added automated integrity and privacy validation for current outputs.
 - Drafted the dissertation Methods and pilot Results sections.
+- Froze a final analysis protocol and chronological decision log.
+- Drafted the literature review, discussion, limitations, and dissertation
+  evidence map.
+- Implemented event-clustered negative-control analysis and a Rademacher
+  wild-cluster score bootstrap for the primary interaction.
+- Added a machine-readable final-readiness audit.
 
 ## Pilot evidence
 
@@ -76,14 +82,21 @@ Dune returned HTTP 402 while starting the remaining event extractions. The
 current account requires additional credits or a quota reset. The extraction
 script now stops immediately on HTTP 402 instead of retrying.
 
+The quota was checked again on 2026-06-20 and continued to return HTTP 402.
+
 ## Resume command
 
 After Dune access is restored:
 
 ```powershell
 python scripts/extract_entity_event_transfers.py --all-eligible
+python scripts/extract_negative_control_outcomes.py --all-eligible
 python scripts/build_analysis_panels.py
 python scripts/run_pilot_analysis.py
+python scripts/run_pilot_robustness.py
+python scripts/run_negative_control_analysis.py --bootstrap-reps 9999
+python scripts/validate_pipeline.py
+python scripts/check_final_readiness.py
 ```
 
 Existing event files are reused, so the first command resumes rather than
@@ -102,3 +115,11 @@ repeating completed extractions.
 - Run one-, three-, and six-hour aggregation sensitivity checks.
 - Produce dissertation-ready tables and figures.
 - Draft Methods, Results, Limitations, and Discussion chapters.
+
+Current readiness:
+
+- eligible events: 20;
+- entity-level events extracted: 3;
+- negative-control events extracted: 0;
+- minimum for confirmatory reporting: 15 for both data families;
+- final inference ready: no.

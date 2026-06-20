@@ -6,6 +6,8 @@ destination and network fee is the primary aggregate estimand.
 
 from __future__ import annotations
 
+import argparse
+import json
 import sys
 from pathlib import Path
 
@@ -21,6 +23,18 @@ RAW_DIR = ROOT / "data" / "raw_negative_controls"
 EVENTS = ROOT / "results" / "event_catalog" / "eligible_events.csv"
 CONTROLS = ROOT / "data" / "processed_market" / "hourly_market_controls.csv"
 OUTPUT = ROOT / "results" / "negative_control_analysis"
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--bootstrap-reps",
+        type=int,
+        default=9999,
+        help="Wild-cluster score bootstrap replications for the primary term.",
+    )
+    parser.add_argument("--seed", type=int, default=20260620)
+    return parser.parse_args()
 
 
 def build_panel() -> pd.DataFrame:
@@ -122,7 +136,98 @@ def coefficient_frame(model, model_name: str) -> pd.DataFrame:
     )
 
 
+def wild_cluster_score_test(
+    model,
+    groups: pd.Series,
+    target_term: str,
+    repetitions: int,
+    seed: int,
+) -> dict[str, float | int | str]:
+    """Rademacher wild-cluster score test for one coefficient under H0=0.
+
+    The target regressor and outcome are residualised against all nuisance
+    regressors. The null cluster scores are sign-flipped at event level. This
+    avoids treating hourly rows as independent evidence.
+    """
+
+    names = list(model.model.exog_names)
+    if target_term not in names:
+        raise ValueError(f"Target term not found: {target_term}")
+
+    target_index = names.index(target_term)
+    x_all = np.asarray(model.model.exog, dtype=float)
+    y = np.asarray(model.model.endog, dtype=float)
+    x = x_all[:, target_index]
+    z = np.delete(x_all, target_index, axis=1)
+
+    gamma_x = np.linalg.lstsq(z, x, rcond=None)[0]
+    gamma_y = np.linalg.lstsq(z, y, rcond=None)[0]
+    x_tilde = x - z @ gamma_x
+    u_null = y - z @ gamma_y
+
+    denominator = float(x_tilde @ x_tilde)
+    beta = float((x_tilde @ y) / denominator)
+    u_full = u_null - beta * x_tilde
+
+    group_codes, unique_groups = pd.factorize(groups, sort=True)
+    cluster_scores_full = np.bincount(
+        group_codes,
+        weights=x_tilde * u_full,
+        minlength=len(unique_groups),
+    )
+    cluster_scores_null = np.bincount(
+        group_codes,
+        weights=x_tilde * u_null,
+        minlength=len(unique_groups),
+    )
+    cluster_count = len(unique_groups)
+    observation_count = len(y)
+    parameter_count = x_all.shape[1]
+    correction = (
+        cluster_count
+        / (cluster_count - 1)
+        * (observation_count - 1)
+        / (observation_count - parameter_count)
+    )
+    variance = (
+        correction
+        * float(cluster_scores_full @ cluster_scores_full)
+        / denominator**2
+    )
+    standard_error = float(np.sqrt(variance))
+    observed_t = beta / standard_error
+
+    rng = np.random.default_rng(seed)
+    weights = rng.choice(
+        np.array([-1.0, 1.0]),
+        size=(repetitions, cluster_count),
+    )
+    numerator = weights @ cluster_scores_null
+    score_scale = np.sqrt(
+        correction
+        * float(cluster_scores_null @ cluster_scores_null)
+    )
+    bootstrap_t = numerator / score_scale
+    p_value = float(
+        (1 + np.count_nonzero(np.abs(bootstrap_t) >= abs(observed_t)))
+        / (repetitions + 1)
+    )
+
+    return {
+        "term": target_term,
+        "coefficient": beta,
+        "cluster_standard_error": standard_error,
+        "observed_t": observed_t,
+        "wild_cluster_score_p_value": p_value,
+        "bootstrap_repetitions": repetitions,
+        "clusters": cluster_count,
+        "seed": seed,
+        "weight_distribution": "Rademacher",
+    }
+
+
 def main() -> None:
+    args = parse_args()
     OUTPUT.mkdir(parents=True, exist_ok=True)
     panel = build_panel()
     models = {
@@ -154,6 +259,18 @@ def main() -> None:
         )
     )
     descriptive.to_csv(OUTPUT / "descriptive_comparison.csv", index=False)
+
+    primary_bootstrap = wild_cluster_score_test(
+        model=models["transactions"],
+        groups=panel["event_id"],
+        target_term="is_cex_bound:log_fee",
+        repetitions=args.bootstrap_reps,
+        seed=args.seed,
+    )
+    (OUTPUT / "primary_wild_cluster_test.json").write_text(
+        json.dumps(primary_bootstrap, indent=2),
+        encoding="utf-8",
+    )
     print(
         coefficients.loc[
             coefficients["term"].isin(
@@ -161,6 +278,8 @@ def main() -> None:
             )
         ].to_string(index=False)
     )
+    print("\nPrimary wild-cluster score test:")
+    print(json.dumps(primary_bootstrap, indent=2))
     print(f"Saved outputs to: {OUTPUT}")
 
 
