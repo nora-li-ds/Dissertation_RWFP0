@@ -1,0 +1,11 @@
+{
+  "term": "is_cex_bound:log_fee",
+  "coefficient": 0.16077110378393505,
+  "cluster_standard_error": 0.02680054039288957,
+  "observed_t": 5.99880082368,
+  "wild_cluster_score_p_value": 0.0001,
+  "bootstrap_repetitions": 9999,
+  "clusters": 20,
+  "seed": 20260620,
+  "weight_distribution": "Rademacher"
+}
